@@ -1,6 +1,35 @@
+
 {
-  "translation":{
-    "welcome":"Bienvenue sur la meilleure application Web du monde",
-    "whereYouCan":"Où tu peux tout ce que tu veux"
+  "translation": {
+    "Home": "Accueil",
+    "Recently": "Récemment",
+    "About Us": "À Propos",
+    "Popular": "Populaires",
+    "dishes": "plats",
+    "Order Now": "Commander Maintenant",
+    "Enjoy Delicious": "Profitez de Délicieux",
+    "Sushi Food": "Nourriture Sushi",
+    "day": "jour",
+    "Enjoy": "Profitez",
+    "a": "un",
+    "good dinner": "bon dîner",
+    "with the best": "avec les meilleurs",
+    "in restaurant and improve your": "au restaurant et améliorez votre",
+    "Contact": "Contact",
+    "Order & Returns": "Commande & Retours",
+    "Videos": "Vidéos",
+    "Reservation": "Réservation",
+    "Information": "Informations",
+    "About": "À Propos",
+    "Menus": "Menus",
+    "Offer": "Offre",
+    "Events": "Événements",
+    "Main Menu": "Menu Principal",
+    "Adress": "Adresse",
+    "Food for the body is not enough": "La nourriture pour le corps ne suffit pas",
+    "There must be food for the soul": "Il doit y avoir de la nourriture pour l'âme",
+    "Search for a product": "Rechercher un produit",
+    "Search": "Rechercher",
+    "Loading Data...": "Chargement des données..."
   }
 }

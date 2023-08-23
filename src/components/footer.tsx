@@ -1,8 +1,11 @@
-import { t } from "i18next";
-import { information, mainMennu } from "../mocks/data";
+
+import { useTranslation } from "react-i18next";
+import { information, mainMennu} from "../mocks/data";
 
 
 export default function Footer() {
+
+  const { t } = useTranslation()
   return (
     <footer className="footer">
       <div className="footer_container container grid">
@@ -28,6 +31,7 @@ export default function Footer() {
            <a href={opt.id} className="footer_link">{t(opt.name)}</a>
                  </li>
             ))}
+
             </ul>
           </div>
           <div>

@@ -1,5 +1,5 @@
 import { HiSearch } from "react-icons/hi"
-import { FormEvent, useContext, useEffect, useState } from "react"
+import { FormEvent, useContext, useState } from "react"
 import { api } from "../utils/service"
 import { t } from "i18next"
 import { Oval } from 'react-loader-spinner'
@@ -8,16 +8,17 @@ import { LangContext } from "../hook/useContext"
 export default function Search() {
     const [text, setText] = useState('')
     const [name, setName] = useState('')
-    const { selected} = useContext(LangContext) ?? {};
+    const { selected,selectedValue} = useContext(LangContext) ?? {};
     const [description, setDescription] = useState<string>()
     const [loading, setLoading] = useState<boolean>(false)
     const [responseData, setResponseData] = useState<boolean>(false)
 
-    const country = 'en'
+    console.log(selectedValue, selected,"seaarch")
+
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
         setLoading(true)
-        api.post("/search", { destino: country, originalText: text })
+        api.post("/search", { destino: selectedValue, originalText: text })
             .then(data => {
                 if (data.status === 200) {
                     setResponseData(true);

@@ -12,6 +12,8 @@ export interface SharedDataContextValue {
     selectedFlag:string,
     setSelectedFlag:(newFlag:string)=>void,
     setSelected:(newSeleted:string)=>void,
+    selectedValue:string,
+    setSelectedValue:(newFlag:string)=>void,
 }
 
 export const LangContext = createContext<SharedDataContextValue | undefined>(undefined);
@@ -33,8 +35,14 @@ const options = [
         lang: "Inglês",
         value: 'en'
     },
+ 
 ];
 
+const useWatchStateChange = (state: any, callback: () => void) => {
+    useEffect(() => {
+        callback();
+    }, [state]);
+};
 
 export const LangProvider = ({ children }: { children: React.ReactNode }) => {
 
@@ -45,7 +53,30 @@ export const LangProvider = ({ children }: { children: React.ReactNode }) => {
     const [optionsSeleted, setOptionsSeleted] = useState<OptionLang>()
     const [selected, setSelected] = useState<string>("");
     const [selectedFlag, setSelectedFlag] = useState<string>("");
+    const [selectedValue, setSelectedValue] = useState<string>("");
 
+
+
+    const changeLanguageAndCountry = (newSelected: string) => {
+        const selectedOption = options?.find(option => option.lang === newSelected);
+
+        if (selectedOption) {
+            const selectedCountry = languageOption.find(option => option.value === selectedOption.value);
+            setCurrentCountryOption(selectedCountry);
+
+            setSelectedValue(selectedOption.value)
+            setSelected(newSelected);
+            setSelectedFlag(selectedOption.flag);
+
+            console.log("Mudou")
+
+            if (selectedCountry) {
+                i18n.changeLanguage(selectedCountry.value);
+            } else {
+                i18n.changeLanguage("en");
+            }
+        }
+    };
 
 
     useEffect(() => {
@@ -79,39 +110,45 @@ export const LangProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }, [country]);
 
-    
+ 
 
     useEffect(() => {
         if(currentCountryOption){
-            const optionsSeleted = options?.find(App => currentCountryOption?.value === App.value);
-            if (optionsSeleted) {
-                setSelected(optionsSeleted.lang);
-                setSelectedFlag(optionsSeleted.flag);
+            const optionsSeleted = options?.filter(App => currentCountryOption?.value === App.value);
+            if (optionsSeleted[0]) {
+                setSelectedValue(optionsSeleted[0].value)
+                setSelected(optionsSeleted[0].lang);
+                setSelectedFlag(optionsSeleted[0].flag);
             }
         }
     
         if (currentCountryOption) {
             i18n.changeLanguage(currentCountryOption.value);
         } else {
-            i18n.changeLanguage("en");
+            i18n.changeLanguage(selectedValue);
         }
     }, [currentCountryOption]);
 
+
+    useWatchStateChange(selected, () => {
+        changeLanguageAndCountry(selected)
+    });
+
     useEffect(() => {
         if (currentCountryOption) {
-            const optionSeleted = options.find(App => currentCountryOption.value === App.value);
-            if (optionSeleted) {
-                setOptionsSeleted(optionSeleted);
+            const optionSeleted = options?.filter(App => currentCountryOption.value === App.value);
+            if (optionSeleted[0]) {
+                setOptionsSeleted(optionSeleted[0]);
             }
         }
     }, [currentCountryOption, options]);
 
 
 
-    console.log(currentCountryOption, optionsSeleted, "on context")
+    console.log(currentCountryOption, optionsSeleted,country,selected,selectedValue,"on context")
 
     return (
-        <LangContext.Provider value={{ country, error, currentCountryOption, options,selected,selectedFlag,setSelectedFlag,setSelected}}>
+        <LangContext.Provider value={{ country, error, currentCountryOption, options,selected,selectedFlag,setSelectedFlag,setSelected,selectedValue, setSelectedValue}}>
             {children}
         </LangContext.Provider>
     );
