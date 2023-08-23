@@ -1,4 +1,4 @@
-const options = [
+const optionsNav = [
    { name: 'Home', id:"#home"},
    { name: 'About Us', id:"#about"},
    { name: 'Popular', id:"#popular"},
@@ -20,4 +20,4 @@ const mainMennu = [
    {name: "Events", id:"#home"},
 ]
 
-export {options, information, mainMennu};
+export {optionsNav, information, mainMennu};
