@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { LangContext } from '../hook/useContext';
 import { OptionLang } from "../utils/type";
 
@@ -13,8 +13,6 @@ export default function LangSelection() {
     >();
 
 
-    console.log(selected, "option lang Dropt Down");
-
     const handleSelect = (option: OptionLang) => {
         setelementSelected(option);
         setIsActive(false);
@@ -26,11 +24,6 @@ export default function LangSelection() {
     };
 
     
-
-
-    useEffect(()=>{
-
-    },)
 
     return (
         <div className="langOptions">

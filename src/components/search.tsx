@@ -8,12 +8,11 @@ import { LangContext } from "../hook/useContext"
 export default function Search() {
     const [text, setText] = useState('')
     const [name, setName] = useState('')
-    const { selected,selectedValue} = useContext(LangContext) ?? {};
+    const {selectedValue} = useContext(LangContext) ?? {};
     const [description, setDescription] = useState<string>()
     const [loading, setLoading] = useState<boolean>(false)
     const [responseData, setResponseData] = useState<boolean>(false)
 
-    console.log(selectedValue, selected,"seaarch")
 
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();

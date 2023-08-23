@@ -21,10 +21,16 @@ export const LangContext = createContext<SharedDataContextValue | undefined>(und
 
 const options = [
     {
+        flag: "./flags/image 2.svg",
+        lang: "Suaili",
+        value: 'sw'
+    },
+    {
         flag: "./flags/image 1.svg",
         lang: "Português",
         value: 'pt'
     },
+ 
     {
         flag: "./flags/image 4.svg",
         lang: "Francês",
@@ -143,9 +149,6 @@ export const LangProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }, [currentCountryOption, options]);
 
-
-
-    console.log(currentCountryOption, optionsSeleted,country,selected,selectedValue,"on context")
 
     return (
         <LangContext.Provider value={{ country, error, currentCountryOption, options,selected,selectedFlag,setSelectedFlag,setSelected,selectedValue, setSelectedValue}}>
