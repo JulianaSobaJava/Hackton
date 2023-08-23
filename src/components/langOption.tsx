@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LangContext } from '../hook/useContext';
 import { OptionLang } from "../utils/type";
 
@@ -6,24 +6,31 @@ import { OptionLang } from "../utils/type";
 
 export default function LangSelection() {
 
-    const { options, currentCountryOption } = useContext(LangContext) ?? {};
-    const optionSeleted = options?.filter(App => currentCountryOption?.value === App.value);
-    const [selected, setSelected] = useState<string | undefined>(optionSeleted?.[0]?.lang);
-    const [selectedFlag, setSelectedFlag] = useState<string | undefined>(optionSeleted?.[0]?.flag);
+    const { options, selected, setSelected, setSelectedFlag, selectedFlag } = useContext(LangContext) ?? {};
     const [isActive, setIsActive] = useState(false);
     const [elementSelected, setelementSelected] = useState<
         OptionLang | undefined
     >();
 
 
-    console.log(selected, optionSeleted, "option lang Dropt Down");
+    console.log(selected, "option lang Dropt Down");
 
     const handleSelect = (option: OptionLang) => {
         setelementSelected(option);
         setIsActive(false);
-        setSelected(option.lang);
-        setSelectedFlag(option.flag);
+        if(setSelected && setSelectedFlag){
+            setSelected(option.lang as string);
+            setSelectedFlag(option.flag);
+        }
+     
     };
+
+    
+
+
+    useEffect(()=>{
+
+    },)
 
     return (
         <div className="langOptions">

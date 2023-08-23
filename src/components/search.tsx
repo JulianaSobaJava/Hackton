@@ -1,36 +1,35 @@
 import { HiSearch } from "react-icons/hi"
-import { FormEvent, useEffect, useState } from "react"
+import { FormEvent, useContext, useEffect, useState } from "react"
 import { api } from "../utils/service"
 import { t } from "i18next"
 import { Oval } from 'react-loader-spinner'
+import { LangContext } from "../hook/useContext"
 
 export default function Search() {
     const [text, setText] = useState('')
-    // const [country, setCountry] = useState<string>()
     const [name, setName] = useState('')
+    const { selected} = useContext(LangContext) ?? {};
     const [description, setDescription] = useState<string>()
     const [loading, setLoading] = useState<boolean>(false)
     const [responseData, setResponseData] = useState<boolean>(false)
 
-    const country = 'pt'
+    const country = 'en'
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
+        setLoading(true)
         api.post("/search", { destino: country, originalText: text })
             .then(data => {
-                setLoading(true)
                 if (data.status === 200) {
-                    setResponseData(true)
+                    setResponseData(true);
                     setLoading(false)
                 }
-                console.log(data)
-                setDescription(data.data.descricao),
-                    setName(data.data.nome)
+                setDescription(data.data.resposta.descricao);
+                    setName(data.data.resposta.nome)
+            }).catch((error)=>{
+  console.log(error)
             })
     }
 
-
-
-    console.log(name, description)
     return (
         <section className="newsletter section">
             <div className="container newletter_container">
@@ -42,9 +41,31 @@ export default function Search() {
                     />
                     {responseData ? (
 
-                        <div>Hello</div>
+                         <div>
+                        <p style={{fontSize:'32px'}}>{name}</p>
+                        <p style={{fontSize:'10px'}}>{description}</p>
+                        </div>
                     ) :
                         (
+                            loading ? 
+                            (
+                                <div style={{display:'flex', flexDirection:'column',alignItems:'center', justifyContent:'center',width:'100%', height:'100%'}}>
+
+                            <p className="section_title">{t("Loading Data...")}</p>
+                            
+                            <Oval    height={60}
+                            width={60}
+                            color="hsl(19, 64%, 52%)"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                            visible={true}
+                            ariaLabel='oval-loading'
+                            secondaryColor="hsl(19, 64%, 52%)"
+                            strokeWidth={2}
+                            strokeWidthSecondary={2}/>
+                            </div>
+                            )
+                            :
                             <div className="newsletter_data">
                                 <h2 className="section_title">
                                     {t("Search for a product")}
@@ -58,7 +79,7 @@ export default function Search() {
                                         value={text}
                                         onChange={(e) => setText(e.target.value)}
                                     />
-                                    <button className="button newsletter_button" onClick={onSubmit}>
+                                    <button className="button newsletter_button" onClick={(e)=>onSubmit(e)}>
                                         {t("Search")}
                                         <HiSearch size={16} />
                                     </button>
